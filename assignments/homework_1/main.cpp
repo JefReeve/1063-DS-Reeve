@@ -1,10 +1,5 @@
 /**
- * This program is a review of some 1043 (CS 1) topics.
- *
- * Functions
- * Structs
- * Arrays of Structs
- *
+ * This program is for homework 1 of 1063-Data-Structures.
  */
 #include <iostream> // write to and read from stdin and stdout
 #include <ctime>    // access system clock (we used for rand function)
@@ -12,7 +7,7 @@
 #include <fstream>  // read a write files
 #include <iomanip>
 
-#define SIZE 10 // gives us a CONSTANT to use anywhere in our program \
+#define SIZE 10 // gives us a CONSTANT to use anywhere in our program
                 // we capitalize constants so we know they are not variables!
 
 using namespace std; // so we don't have to put std:: in front of cin, cout.
