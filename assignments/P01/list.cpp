@@ -38,13 +38,9 @@ struct Employee {
 
 //main linked list class
 class LinkedList {
-private:
-	Employee* Head;
 
 public:
-	LinkedList() {
-		Head = NULL;
-	}
+	Employee* Head = NULL;
 
 	//push class to add a node to the front of the list
 	void Push(string id, string first, string last, string sex, string mail, double pay) {
@@ -68,7 +64,7 @@ public:
 	}
 
 	//method to search the list for an email, searched via email
-	bool find(string searchEmail) {
+	Employee* find(string searchEmail) {
 		Employee* Temp = Head;
 
 		while (Temp != NULL) {
@@ -78,12 +74,12 @@ public:
 				cout << "\n" << Temp->emp_id << ", " << Temp->first_name << ", "
 					<< Temp->last_name << ", " << Temp->email << ", " 
 					<< Temp->gender << ", " << Temp->hourly_pay << endl;
-				return true;
+				return Temp;
 			}
 			Temp = Temp->Next;
 		}
-		//if nothing in the list matches then it returns a false
-		return false;
+		//if nothing in the list matches then it returns NULL
+		return NULL;
 	}
 
 	void pop() {
@@ -122,22 +118,6 @@ public:
 			}
 		}
 		return false;
-	}
-
-	//method to print the list
-	void print() {
-		Employee* Temp = Head;
-
-		while (Temp != NULL) {
-			cout << Temp->emp_id << ", " << Temp->first_name << ", " << 
-				Temp->last_name << ", " << Temp->email << ", " 
-				<< Temp->gender << ", " << Temp->hourly_pay;
-
-			if (Temp->Next) {
-				cout << "->";
-			}
-			Temp = Temp->Next;
-		}
 	}
 
 	//method to find partial matches in strings
@@ -191,6 +171,7 @@ int menu() {
 int main() {
 	string inputEmail = "";
 	bool Result = false;
+	Employee* searchEmp = NULL;
 
 	string tempID = "";
 	string tempFirst = "";
@@ -199,10 +180,13 @@ int main() {
 	string tempEmail = "";
 	double tempPay = 0;
 
+	ofstream fout;
+	fout.open("output.txt");
+
 	//makes the main list and loades it with data from a file
 	LinkedList L;
 	L.load(L);
-	L.pop();
+	//L.pop();
 
 	//L.print();
 
@@ -211,15 +195,18 @@ int main() {
 	//loop to keep the user in the menu
 	while (choice != 4) {
 		choice = menu();
+
 		//choice 1 to use search method to find an accunt in the list
 		if (choice == 1) {
 			cout << "Please enter an email to search for: ";
 			cin >> inputEmail;
-			Result = L.find(inputEmail);
+			searchEmp = L.find(inputEmail);
 			//the method prints the account if found, so it doesnt need to be
 			//printed here
-			if (Result == true)
+			if (searchEmp != NULL) {
 				cout << "Search Completed\n";
+				
+			}
 			else {
 				cout << "The search did not yield any results. \n";
 			}
@@ -254,8 +241,23 @@ int main() {
 		}
 	}
 
+	Employee* Temp = L.Head;
+	int count = 0;
+
+	while (Temp != NULL && count < 30) {
+		fout << Temp->emp_id << "\n";
+
+		Temp = Temp->Next;
+		count++;
+	}
+	
+	if (searchEmp != NULL) {
+		fout << searchEmp->email << endl;
+	}
+
 	string test = "ENDING PROGRAM";
 
+	fout.close();
 	cout << test << endl;
 	system("pause");
 	return 0;
