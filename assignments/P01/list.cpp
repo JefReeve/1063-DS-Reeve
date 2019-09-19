@@ -1,3 +1,8 @@
+//This program has a list class that stores employee information, one per node.
+//There is a basic menu to navigate and perform actions. Information is loaded
+//from the employees.txt file and some information is printed to the screen, and
+//some is printed to a file called output.txt
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -25,7 +30,8 @@ struct Employee {
 	}
 
 	//overloaded employee constructer with information passed to it
-	Employee(string id, string first, string last, string sex, string mail, double pay) {
+	Employee(string id, string first, string last, string sex, string mail,
+		double pay) {
 		emp_id = id;
 		first_name = first;
 		last_name = last;
@@ -43,7 +49,8 @@ public:
 	Employee* Head = NULL;
 
 	//push class to add a node to the front of the list
-	void Push(string id, string first, string last, string sex, string mail, double pay) {
+	void Push(string id, string first, string last, string sex, string mail, 
+		double pay) {
 
 			Employee* Temp = new Employee(id, first, last, sex, mail, pay);
 
@@ -63,9 +70,10 @@ public:
 			}
 	}
 
-	//method to search the list for an email, searched via email
-	Employee* find(string searchEmail) {
+	//method to search the list for an email returns the amount of results
+	int find(string searchEmail) {
 		Employee* Temp = Head;
+		int count = 0;
 
 		while (Temp != NULL) {
 			//uses another method to check for partial matches
@@ -74,20 +82,26 @@ public:
 				cout << "\n" << Temp->emp_id << ", " << Temp->first_name << ", "
 					<< Temp->last_name << ", " << Temp->email << ", " 
 					<< Temp->gender << ", " << Temp->hourly_pay << endl;
-				return Temp;
+				count++;
 			}
 			Temp = Temp->Next;
 		}
 		//if nothing in the list matches then it returns NULL
-		return NULL;
+		if (count > 0)
+			return count;
+		else
+			return NULL;
 	}
 
-	void pop() {
+	//method to pop the first item out of the list and return it
+	Employee* pop() {
+		Employee* temp = Head;
 		//checks for an empty list
 		if (Head != NULL) {
 			//replaces the front of the list with the second
 			Head = Head->Next;
 		}
+		return temp;
 	}
 
 	//method to delete a specific account, searched via email
@@ -171,7 +185,8 @@ int menu() {
 int main() {
 	string inputEmail = "";
 	bool Result = false;
-	Employee* searchEmp = NULL;
+	int searchResult = NULL;
+	Employee* popResult;
 
 	string tempID = "";
 	string tempFirst = "";
@@ -186,7 +201,7 @@ int main() {
 	//makes the main list and loades it with data from a file
 	LinkedList L;
 	L.load(L);
-	//L.pop();
+	popResult = L.pop();
 
 	//L.print();
 
@@ -196,14 +211,14 @@ int main() {
 	while (choice != 4) {
 		choice = menu();
 
-		//choice 1 to use search method to find an accunt in the list
+		//choice 1 to use search method to find an account in the list
 		if (choice == 1) {
 			cout << "Please enter an email to search for: ";
 			cin >> inputEmail;
-			searchEmp = L.find(inputEmail);
+			searchResult = L.find(inputEmail);
 			//the method prints the account if found, so it doesnt need to be
 			//printed here
-			if (searchEmp != NULL) {
+			if (searchResult != NULL) {
 				cout << "Search Completed\n";
 				
 			}
@@ -244,6 +259,7 @@ int main() {
 	Employee* Temp = L.Head;
 	int count = 0;
 
+	//loop to print the first 30 ids in the list
 	while (Temp != NULL && count < 30) {
 		fout << Temp->emp_id << "\n";
 
@@ -251,10 +267,14 @@ int main() {
 		count++;
 	}
 	
-	if (searchEmp != NULL) {
-		fout << searchEmp->email << endl;
+	//prints the search results to the file
+	if (searchResult != NULL) {
+		fout << "There are " << searchResult << " results for the search : "
+			<< inputEmail << endl;
 	}
 
+	//prints the poppped email
+	fout << "The popped email was : " << popResult->email << endl;
 	string test = "ENDING PROGRAM";
 
 	fout.close();
