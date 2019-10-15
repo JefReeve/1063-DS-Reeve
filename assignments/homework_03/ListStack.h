@@ -1,11 +1,7 @@
 /**
- * ListStack.h
- *
- * List stack definition file. This stack hold animal types. Why? Cause integers
- * get a little boring after a while.
- *
- * Author: Terry Griffin
- * Date: Oct 4th ish 2019
+Homework 3
+Jeff Reeve
+10/14/2019
  */
 #include <iostream>
 
