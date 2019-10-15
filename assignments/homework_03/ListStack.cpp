@@ -1,3 +1,8 @@
+/**
+Homework 3
+Jeff Reeve
+10/14/2019
+ */
 #include "ListStack.h"
 #include <iostream>
 #include <string>
