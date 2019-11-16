@@ -61,6 +61,16 @@ public:
 	num() {
 		head = tail = NULL;
 	}
+
+//   ~num() {
+//     node *temp = head;
+
+//     while (temp) {
+//         temp = temp->next;
+//         delete head;
+//         head = temp;
+//     }
+// }
 	
 	/**
 	 * getTail
@@ -130,21 +140,16 @@ public:
 	 */
 	void endSert(int n) {
 		//if there is an empty list head and tail equal the same node.
-		if (isEmpty()) {
-			node* temp = new node(n);
-			head = temp;
-			tail = temp;
-		}
-		else {
-			//uses overloaded constructor to assign prev
-			node* temp = new node(n, tail);
-			node* traverse = head;
-			while (traverse->next) {
-				traverse = traverse->next;
-			}
-			traverse->next = temp;
-			tail = temp;
-		}
+    node *Temp = new node(n);
+
+    if (!head) {
+        head = Temp;
+        tail = Temp;
+    } else {
+        tail->next = Temp;
+        Temp->prev = tail;
+        tail = Temp;
+    }
 	}
 	/**
 	 * frontSert
@@ -159,19 +164,16 @@ public:
 	 *      void
 	 */
 	void frontSert(int n) {
-		//if there is an empty list head and tail equal the same node.
-		if (isEmpty()) {
-			node* temp = new node(n);
-			head = temp;
-			tail = temp;
-		}
-		else {
-			//does not uses overloaded constructor since prev will be NULL
-			node* temp = head;
-			head = new node(n);
-			head->next = temp;
-			temp->prev = head;
-		}
+    node *Temp = new node(n);
+
+    if (!head) {
+        head = Temp;
+        tail = Temp;
+    } else {
+        head->prev = Temp;
+        Temp->next = head;
+        head = Temp;
+    }
 	}
 	/**
 	 * sub
@@ -433,6 +435,6 @@ int main() {
 		list1.printResult(answer);
 		outfile << endl;
 	}
-	system("pause");
+	//system("pause");
 	return 0;
 }
