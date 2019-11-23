@@ -78,6 +78,7 @@ class ceaserCipher{
     int howMany = 0;
     int shift = 0;
     ofstream fout(outFile);
+    fout << "JEFF REEVE\n11/24/2019\nProgram 4 ouput\n\n";
     ifstream fin(file);
     fin >> howMany;
 
