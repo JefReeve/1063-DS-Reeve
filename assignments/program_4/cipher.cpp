@@ -10,6 +10,9 @@ class ceaserCipher{
 
   public:
 
+  ceaserCipher(){
+    shift = 13;
+  }
   string encrypt(string s){
     int intVal=0;
     char letter;
@@ -84,9 +87,7 @@ class ceaserCipher{
       getline(fin, fnl);
       getline(fin, fnl);
       fnl = upperCase(fnl);
-      cout << "Test: " << fnl << endl;
       fnl = decrypt(fnl);
-      cout << "Test: " << fnl << endl;
       writeCipherText(fout, fnl);
     }
     fin.close();
@@ -95,11 +96,11 @@ class ceaserCipher{
    void writeCipherText(ofstream &fout, string msg){
     string temp = "";
     string fnl = "";
-    //ofstream fout(file);
+    
     for(int i = 0; i < msg.length(); i++){
       fout << msg[i];
     }
-    fout << endl;
+    fout << endl << endl;
    }
 
    string readPlainText(string file){
@@ -135,7 +136,7 @@ int main() {
 
   lul.setShift(6);
 
-  lul.readCipherText("encFile.txt", "output.txt");
+  lul.readCipherText("encFile.txt", "decrypted.txt");
   // cout << lul.readPlainText("encFile.txt");
 
   temp = lul.upperCase(temp);
