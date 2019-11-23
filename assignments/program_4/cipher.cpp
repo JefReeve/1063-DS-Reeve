@@ -136,7 +136,7 @@ int main() {
 
   lul.setShift(6);
 
-  lul.readCipherText("encFile.txt", "decrypted.txt");
+  lul.readCipherText("encrypted.txt", "decrypted.txt");
   // cout << lul.readPlainText("encFile.txt");
 
   temp = lul.upperCase(temp);
